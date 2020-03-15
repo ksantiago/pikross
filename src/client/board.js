@@ -41,7 +41,9 @@ class Board extends React.Component {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
-      ]]
+      ]],
+      gameComplete: false,
+      gameWon: ''
     };
     this.handleClickCell = this.handleClickCell.bind(this)
     this.handleDone = this.handleDone.bind(this)
@@ -94,22 +96,34 @@ class Board extends React.Component {
     let solutionBoard = this.stringifyArray(this.props.board.solution);
 
     if (currentBoard === solutionBoard){
-      console.log('You win!!!!')
+      this.setState({
+        gameWon: true,
+        gameComplete: true
+      })
     } else {
-      console.log('you lost!')
+      this.setState({
+        gameComplete: true
+      })
     }
   }
 
   handleReset(){
-    this.setState({board: initBoard})
+    this.setState({
+      board: initBoard,
+      gameComplete: false,
+      gameWon: false
+    })
   }
 
   render() {
     const {hintsTop,hintsLeft} = this.props.board
     return (
       <div className="board">
-        {
-          hintsTop ?
+        {this.state.gameComplete ?
+          (this.state.gameWon ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : <div className="board-results">Sorry, try again</div>)
+        : null
+        }
+          {hintsTop ?
         <div className="hints-top">{hintsTop.map((hintsRow, rhIdx) => {
           return (
           <div className="hintT-row" key={`rht-${rhIdx}`}>{
