@@ -2,6 +2,13 @@ import React from "react";
 import { fetchBoard } from '../reducers/boardReducer'
 import { connect } from 'react-redux'
 
+const initBoard = [
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0]
+];
 
 class Board extends React.Component {
   constructor() {
@@ -27,43 +34,47 @@ class Board extends React.Component {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
-      ]
+      ],
+      boardHistory: [[
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ]]
     };
     this.handleClickCell = this.handleClickCell.bind(this)
     this.handleDone = this.handleDone.bind(this)
     this.handleReset = this.handleReset.bind(this)
+    this.cloneArray = this.cloneArray.bind(this)
+
   }
 
   componentDidMount() {
     this.props.fetchBoard()
   }
 
+  cloneArray (array){
+    let clone = []
+    for (let i = 0; i< array.length; i++){
+      clone.push([...array[i]])
+    }
+    return clone
+  }
+
   handleClickCell = (evt, rIdx, cIdx) => {
-    const newBoard = [...this.state.board]
-    // if (evt.shiftKey) {
-    //   newBoard[rIdx][cIdx] = 2
-    //   this.setState({
-    //     board: newBoard
-    //   })
-    //   // evt.target.innerHTML = 'X'
-    // }
-    // else {
+    const newBoard = this.cloneArray(this.state.board)
+
     if(this.state.board[rIdx][cIdx] === 0) newBoard[rIdx][cIdx] = 1
     else if(this.state.board[rIdx][cIdx] === 1) newBoard[rIdx][cIdx] = 2
     else newBoard[rIdx][cIdx] = 0
 
     this.setState({
-        board: newBoard
+      board: newBoard
     })
-    // }
+    this.state.boardHistory.push(newBoard)
   }
-  //handle clickCell
-  //updates the local state - board
-  //colors cell to blue when clicked
-  //if you hold down shft + click = X
-  //handle clickDone
-  //checks current local state board against solution board
-  //convert array to string
+
   stringifyArray(array){
     let str = ""
     for(let i=0; i< array.length; i++){
@@ -89,31 +100,12 @@ class Board extends React.Component {
       console.log('you lost!')
     }
   }
-  //handle clickReset
-  //this.setState ({this.state.board = [
-  // 	[0, 0, 0, 0, 0],
-  // 	[0, 0, 0, 0, 0],
-  // 	[0, 0, 0, 0, 0],
-  // 	[0, 0, 0, 0, 0],
-  // 	[0, 0, 0, 0, 0]
-  // ]})
+
   handleReset(){
-    this.setState({board: [
-      	[0, 0, 0, 0, 0],
-      	[0, 0, 0, 0, 0],
-      	[0, 0, 0, 0, 0],
-      	[0, 0, 0, 0, 0],
-      	[0, 0, 0, 0, 0]
-    ]})
+    this.setState({board: initBoard})
   }
 
   render() {
-    console.log('This is the state', this.state)
-    //console.log('These are the props on board', this.props)
-    // let hintsTop
-    // if (!this.props.board.hintsTop) hintsTop = this.state.hintsTop
-    // else hintsTop = this.props.board.hintsTop
-    // console.log(hintsTop)
     const {hintsTop,hintsLeft} = this.props.board
     return (
       <div className="board">
