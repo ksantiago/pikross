@@ -91,7 +91,7 @@ class Board extends React.Component {
 
   handleDone(){
     let currentBoard = this.stringifyArray(this.state.board);
-    let solutionBoard = this.stringifyArray(this.props.board.board);
+    let solutionBoard = this.stringifyArray(this.props.board.solution);
 
     if (currentBoard === solutionBoard){
       console.log('You win!!!!')

@@ -47,7 +47,6 @@ table {
 }
 /* -------BOARD-------- */
 .board {
-	border: 2px solid green;
   height: 100vh;
   background-color: #232323;
   display: flex;
