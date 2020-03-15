@@ -75,14 +75,14 @@ class Board extends React.Component {
     // if (!this.props.board.hintsTop) hintsTop = this.state.hintsTop
     // else hintsTop = this.props.board.hintsTop
     // console.log(hintsTop)
-    const {hintsTop} = this.props.board
+    const {hintsTop,hintsLeft} = this.props.board
     return (
       <div className="board">
         {
           hintsTop ?
         <div className="hints-top">{hintsTop.map((hintsRow, rhIdx) => {
           return (
-          <div className="hint-row" key={`rht-${rhIdx}`}>{
+          <div className="hintT-row" key={`rht-${rhIdx}`}>{
             hintsRow.map((hintCell, chIdx) => (
               <div key={`cht-${chIdx}`}>{hintCell}</div>
             ))
@@ -91,17 +91,36 @@ class Board extends React.Component {
         })}</div> :
             null
         }
-        {this.state.board.map((row, rIdx) => {
-          return (
-            <div className="row" key={`row-${rIdx}`}>
-              {row.map((cell, cIdx) => {
-                return (
-                  <div onClick={(e) => this.handleClickCell(e, rIdx, cIdx)} className="cell" key={`cell-${cIdx}`}></div>
+        <div className="hl-board">
+          <div className="hints-left">
+            {hintsLeft ?
+              hintsLeft
+                .map((hintLRow, rhLIdx) =>
+                  <div className ="hintL-row"key ={`rhl-${rhLIdx}`}>{
+                    hintLRow.map((hintLCell,chLIdx) =>
+                      <div className="hintL-cell" key={`chl-${chLIdx}`}>{hintLCell}</div>
+                    )
+                  }
+                  </div>
                 )
-              })}
-            </div>
-          );
-        })}
+              : null
+
+            }
+          </div>
+          <div>
+            {this.state.board.map((row, rIdx) => {
+              return (
+                <div className="row" key={`row-${rIdx}`}>
+                  {row.map((cell, cIdx) => {
+                    return (
+                      <div onClick={(e) => this.handleClickCell(e, rIdx, cIdx)} className="cell" key={`cell-${cIdx}`}></div>
+                    )
+                  })}
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     );
   }
