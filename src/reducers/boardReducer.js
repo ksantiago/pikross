@@ -1,4 +1,4 @@
-import {solutionsRef} from '../config/firebase'
+import {ref} from '../config/firebase'
 
 // Initial state
 const initialState = {}
@@ -13,17 +13,18 @@ const gotBoard = (solution) => ({
 })
 
 // Thunks
-export const fetchBoard = () => async dispatch =>{
+export const fetchBoard = () => async dispatch => {
   try {
-    await solutionsRef.once("value", async function(snapshot){
+    // await ref.once("value", async (snapshot) => {
+    //   console.log(Object.keys(snapshot.child('solutions').val()))
+    // })
+    await ref.once("value", async (snapshot) => {
       const solutions = await snapshot.child('solutions').val();
+      // console.log('solutions: ', solutions)
       const solKeys = Object.keys(solutions)
-      // console.log('Keys=', solKeys);
       const randIdx = Math.floor( Math.random() * Math.floor(solKeys.length))
-      // console.log('Random Idx', randIdx)
-      const sol = await snapshot.child(`solutions/${solKeys[randIdx]}`).val()
-      // console.log('solution=', solution )
-      dispatch(gotBoard(sol))
+      const solution = await snapshot.child(`solutions/${solKeys[randIdx]}`).val()
+      dispatch(gotBoard(solution))
     })
   } catch (error) {
     console.error(error)

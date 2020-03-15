@@ -1,7 +1,7 @@
 import React from "react";
-//import {fetchBoard} from '../store'
-//import {connect} from 'react-redux'
-// const ref = require('../../app')
+import {fetchBoard} from '../reducers/boardReducer'
+import {connect} from 'react-redux'
+
 
 class Board extends React.Component {
 	constructor() {
@@ -30,10 +30,10 @@ class Board extends React.Component {
 			]
     };
   }
-  // componentDidMount(){
-	// 	//call thunk to fetch new board with solution
-	// 	this.props.fetchBoard()
-	// }
+  componentDidMount(){
+		//call thunk to fetch new board with solution
+		this.props.fetchBoard()
+	}
 	//handle clickCell
 	//updates the local state - board
 	//colors cell to blue when clicked
@@ -68,14 +68,17 @@ class Board extends React.Component {
 		);
 	}
 }
-//map state to props
-// const mapState = (state) => ({
-// 	board: state.board
-// })
-//map dispatch to props
-// const mapDispatch = (dispatch) => ({
-// 	fetchBoard: () => dispatch(fetchBoard())
-// })
+
+// map state to props
+const mapState = (state) => ({
+	board: state.board
+})
+
+// map dispatch to props
+const mapDispatch = (dispatch) => ({
+	fetchBoard: () => dispatch(fetchBoard())
+})
+
 //return connected board
-//export default connect(mapState)(Board)
-export default Board
+export default connect(mapState, mapDispatch)(Board)
+// export default Board
