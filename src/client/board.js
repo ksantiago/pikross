@@ -121,6 +121,10 @@ class Board extends React.Component {
             })}
           </div>
         </div>
+        <div className="game-buttons">
+          <button>Done</button>
+          <button>Reset</button>
+        </div>
       </div>
     );
   }

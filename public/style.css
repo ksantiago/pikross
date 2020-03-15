@@ -116,3 +116,7 @@ table {
 	line-height: 50px;
 	margin-left: 5px;
 }
+
+.game-buttons {
+	width: 205px
+}
