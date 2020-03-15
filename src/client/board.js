@@ -51,6 +51,7 @@ class Board extends React.Component {
     this.handleReset = this.handleReset.bind(this)
     this.cloneArray = this.cloneArray.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
+    this.handleUndo = this.handleUndo.bind(this)
   }
 
   componentDidMount() {
@@ -118,6 +119,17 @@ class Board extends React.Component {
 
   handleNewGame() {
     this.props.fetchBoard()
+    this.handleReset()
+  }
+
+  handleUndo() {
+    let cpBoardHist = this.cloneArray(this.state.boardHistory)
+    cpBoardHist.pop()
+    let lastBoardPlayed = cpBoardHist[cpBoardHist.length - 1]
+    this.setState({
+      boardHistory: cpBoardHist,
+      board: lastBoardPlayed
+    })
   }
 
   render() {
@@ -130,13 +142,13 @@ class Board extends React.Component {
           <div>PERCENTAGE</div>
           <button onClick={this.handleNewGame}>New Game</button>
         </div>
-        <div>
+        <div className="win-message">
+        </div>
+        <div className="board">
           {this.state.gameComplete ?
             (this.state.gameWon ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : <div className="board-results">Sorry, try again</div>)
             : null
           }
-        </div>
-        <div className="board">
 
           {hintsTop ?
             <div className="hints-top">{hintsTop.map((hintsRow, rhIdx) => {
@@ -193,7 +205,7 @@ class Board extends React.Component {
           <div className="game-buttons">
             <button onClick={this.handleDone}>Done</button>
             <button onClick={this.handleReset}>Reset</button>
-            <button>Undo</button>
+            <button onClick={this.handleUndo}>Undo</button>
           </div>
         </div>
       </div>

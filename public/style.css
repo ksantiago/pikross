@@ -47,7 +47,7 @@ table {
 }
 /* -------BOARD-------- */
 .board {
-  height: 100vh;
+  height: 80vh;
   background-color: #232323;
   display: flex;
   flex-direction: column;
@@ -137,7 +137,11 @@ button {
 }
 
 .board-results {
+	background-color: #232323;
 	color: white;
+	margin-left: 2em;
+	margin-bottom: 2em;
+	font-size: 1.5em;
 }
 
 .top-section {
@@ -147,6 +151,13 @@ button {
 	justify-content: space-around;
 	align-items: baseline;
 }
+
+.win-message {
+	display: flex;
+	background-color: #232323;
+	justify-content: center;
+}
+
 /* HOME */
 .home {
 	height: 90vh;
