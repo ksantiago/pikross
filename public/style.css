@@ -166,6 +166,18 @@ button {
 	margin-bottom: 10em;
 }
 
+/* NAVBAR */
+.navbar {
+	background-color: #5ce1e6;
+	color: #232323;
+}
+
+.title {
+	margin-left: 3em;
+	padding: 1.5em 0;
+	font-size: 1.3em;
+}
+
 
 /* FOOTER */
 

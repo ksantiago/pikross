@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchBoard } from '../reducers/boardReducer'
 import { connect } from 'react-redux'
+import Navbar from './navbar'
 
 const initBoard = [
   [0, 0, 0, 0, 0],
@@ -119,6 +120,7 @@ class Board extends React.Component {
     const { hintsTop, hintsLeft } = this.props.board
     return (
       <div>
+        <Navbar />
         <div className="top-section">
           <div>PERCENTAGE</div>
           <button>New Game</button>
