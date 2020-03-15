@@ -71,18 +71,17 @@ table {
 	text-align: center;
 	line-height: 50px;
 }
-.hint-row {
-	display: flex;
-	justify-content: space-between;
-}
-.hint-cell {
-	height: 20px;
-	margin-left: 21px;
-	margin-top: 4px;
-}
-.white {
-	color: black;
-	background-color: white;
 
+.hint-top {
+	display: flex;
+  flex-direction: column;
+}
+
+.hint-row{
+	display: flex;
+	justify-content: space-evenly;
+	width: 300px;
+	color: white;
+	margin-bottom: 5px
 }
 

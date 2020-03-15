@@ -80,13 +80,13 @@ class Board extends React.Component {
       <div className="board">
         {
           hintsTop ?
-        <div className="hint-row">{hintsTop.map((hintsRow, rhIdx) => {
+        <div className="hints-top">{hintsTop.map((hintsRow, rhIdx) => {
           return (
-          <div className="cell" key={`rh-${rhIdx}`}>{hintsRow.map((hintCell, chIdx) => {
-            return (
-              <div className="hint-cell" key={`ch-${chIdx}`}>{hintCell}</div>
-            )
-          })}</div>
+          <div className="hint-row" key={`rht-${rhIdx}`}>{
+            hintsRow.map((hintCell, chIdx) => (
+              <div key={`cht-${chIdx}`}>{hintCell}</div>
+            ))
+          }</div>
           )
         })}</div> :
             null
