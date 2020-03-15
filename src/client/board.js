@@ -44,7 +44,8 @@ class Board extends React.Component {
         [0, 0, 0, 0, 0]
       ]],
       gameComplete: false,
-      gameWon: ''
+      gameWon: '',
+      accuracy: 0
     };
     this.handleClickCell = this.handleClickCell.bind(this)
     this.handleDone = this.handleDone.bind(this)
@@ -97,15 +98,18 @@ class Board extends React.Component {
   handleDone() {
     let currentBoard = this.stringifyArray(this.state.board);
     let solutionBoard = this.stringifyArray(this.props.board.solution);
+    const acc = this.getAccuracy(currentBoard, solutionBoard)
 
     if (currentBoard === solutionBoard) {
       this.setState({
         gameWon: true,
-        gameComplete: true
+        gameComplete: true,
+        accuracy: acc
       })
     } else {
       this.setState({
-        gameComplete: true
+        gameComplete: true,
+        accuracy: acc
       })
     }
   }
@@ -133,8 +137,21 @@ class Board extends React.Component {
     })
   }
 
-  getAccuracy() {
+  getAccuracy(currBoard, solution) {
     console.log('you accurate girl')
+
+    if (currBoard === solution) { return 100 }
+    else {
+      let strWhereTheyMatch = ''
+      for (let i = 0; i < currBoard.length; i++) {
+
+        if (currBoard[i] === solution[i]) {
+          strWhereTheyMatch += currBoard[i]
+        }
+      }
+      return strWhereTheyMatch.length / solution.length * 100
+    }
+
   }
 
   render() {
@@ -144,14 +161,14 @@ class Board extends React.Component {
       <div>
         <Navbar />
         <div className="top-section">
-          <div>ACCURACY</div>
+
           <button onClick={this.handleNewGame}>New Game</button>
         </div>
         <div className="win-message">
         </div>
         <div className="board">
           {this.state.gameComplete ?
-            (this.state.gameWon ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : <div className="board-results">Sorry, try again</div>)
+            (this.state.gameWon ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : <div className="board-results">You almost got it. You're {this.state.accuracy}% accurate!</div>)
             : null
           }
 
