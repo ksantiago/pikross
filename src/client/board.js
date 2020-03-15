@@ -30,8 +30,10 @@ class Board extends React.Component {
       ]
     };
     this.handleClickCell = this.handleClickCell.bind(this)
+    this.handleDone = this.handleDone.bind(this)
     this.handleReset = this.handleReset.bind(this)
   }
+
   componentDidMount() {
     this.props.fetchBoard()
   }
@@ -59,7 +61,31 @@ class Board extends React.Component {
   //handle clickDone
   //checks current local state board against solution board
   //convert array to string
+  stringifyArray(array){
+    let str = ""
+    for(let i=0; i< array.length; i++){
+      if(Array.isArray(array[i])){
+        str += this.stringifyArray(array[i])
+      } else {
+        if (array[i] === 0) str += '2'
+        else str += array[i]
+      }
+    }
 
+    return str
+  }
+
+  handleDone(){
+    let currentBoard = this.stringifyArray(this.state.board);
+    let solutionBoard = this.stringifyArray(this.props.board.solution);
+    console.log(currentBoard)
+    console.log(solutionBoard)
+    if (currentBoard === solutionBoard){
+      console.log('You win!!!!')
+    } else {
+      console.log('you lost!')
+    }
+  }
   //handle clickReset
   //this.setState ({this.state.board = [
   // 	[0, 0, 0, 0, 0],
@@ -142,8 +168,8 @@ class Board extends React.Component {
           </div>
         </div>
         <div className="game-buttons">
-          <button>Done</button>
-          <button onClick ={this.handleReset}>Reset</button>
+          <button onClick={this.handleDone}>Done</button>
+          <button onClick={this.handleReset}>Reset</button>
         </div>
       </div>
     );
