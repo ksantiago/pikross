@@ -40,19 +40,22 @@ class Board extends React.Component {
 
   handleClickCell = (evt, rIdx, cIdx) => {
     const newBoard = [...this.state.board]
-    if (evt.shiftKey) {
-      newBoard[rIdx][cIdx] = 2
-      this.setState({
+    // if (evt.shiftKey) {
+    //   newBoard[rIdx][cIdx] = 2
+    //   this.setState({
+    //     board: newBoard
+    //   })
+    //   // evt.target.innerHTML = 'X'
+    // }
+    // else {
+    if(this.state.board[rIdx][cIdx] === 0) newBoard[rIdx][cIdx] = 1
+    else if(this.state.board[rIdx][cIdx] === 1) newBoard[rIdx][cIdx] = 2
+    else newBoard[rIdx][cIdx] = 0
+
+    this.setState({
         board: newBoard
-      })
-      // evt.target.innerHTML = 'X'
-    }
-    else {
-      newBoard[rIdx][cIdx] = 1
-      this.setState({
-        board: newBoard
-      })
-    }
+    })
+    // }
   }
   //handle clickCell
   //updates the local state - board
@@ -105,7 +108,7 @@ class Board extends React.Component {
   }
 
   render() {
-    // console.log('This is the state', this.state)
+    console.log('This is the state', this.state)
     //console.log('These are the props on board', this.props)
     // let hintsTop
     // if (!this.props.board.hintsTop) hintsTop = this.state.hintsTop
