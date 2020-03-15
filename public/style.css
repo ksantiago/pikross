@@ -45,6 +45,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.teal {
+	background-color: #5ce1e6;
+}
 /* -------BOARD-------- */
 .board {
   height: 80vh;
@@ -180,6 +184,11 @@ button {
 /* NAVBAR */
 .navbar {
 	background-color: #5ce1e6;
+	color: #232323;
+}
+
+.navbar a {
+	text-decoration: none;
 	color: #232323;
 }
 

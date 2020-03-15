@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const Navbar = () => {
   return (
     <div className="navbar">
-      <div className="title">PIKROSS</div>
+      <Link to="/"><div className="title">PIKROSS</div></Link>
     </div>
   )
 }

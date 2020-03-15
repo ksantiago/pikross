@@ -52,6 +52,7 @@ class Board extends React.Component {
     this.cloneArray = this.cloneArray.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
     this.handleUndo = this.handleUndo.bind(this)
+    this.getAccuracy = this.getAccuracy.bind(this)
   }
 
   componentDidMount() {
@@ -132,6 +133,10 @@ class Board extends React.Component {
     })
   }
 
+  getAccuracy() {
+    console.log('you accurate girl')
+  }
+
   render() {
 
     const { hintsTop, hintsLeft } = this.props.board
@@ -139,7 +144,7 @@ class Board extends React.Component {
       <div>
         <Navbar />
         <div className="top-section">
-          <div>PERCENTAGE</div>
+          <div>ACCURACY</div>
           <button onClick={this.handleNewGame}>New Game</button>
         </div>
         <div className="win-message">
