@@ -3,7 +3,6 @@ import { fetchBoard } from '../reducers/boardReducer'
 import { connect } from 'react-redux'
 
 
-
 class Board extends React.Component {
   constructor() {
     super();
@@ -28,9 +27,10 @@ class Board extends React.Component {
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0]
-      ],
+      ]
     };
     this.handleClickCell = this.handleClickCell.bind(this)
+    this.handleReset = this.handleReset.bind(this)
   }
   componentDidMount() {
     this.props.fetchBoard()
@@ -43,15 +43,13 @@ class Board extends React.Component {
       this.setState({
         board: newBoard
       })
-      evt.target.className += ' two'
-      evt.target.innerHTML = 'X'
+      // evt.target.innerHTML = 'X'
     }
     else {
       newBoard[rIdx][cIdx] = 1
       this.setState({
         board: newBoard
       })
-      evt.target.className += ' one'
     }
   }
   //handle clickCell
@@ -61,6 +59,7 @@ class Board extends React.Component {
   //handle clickDone
   //checks current local state board against solution board
   //convert array to string
+
   //handle clickReset
   //this.setState ({this.state.board = [
   // 	[0, 0, 0, 0, 0],
@@ -69,8 +68,19 @@ class Board extends React.Component {
   // 	[0, 0, 0, 0, 0],
   // 	[0, 0, 0, 0, 0]
   // ]})
+  handleReset(){
+    this.setState({board: [
+      	[0, 0, 0, 0, 0],
+      	[0, 0, 0, 0, 0],
+      	[0, 0, 0, 0, 0],
+      	[0, 0, 0, 0, 0],
+      	[0, 0, 0, 0, 0]
+    ]})
+  }
+
   render() {
-    console.log('These are the props on board', this.props)
+    // console.log('This is the state', this.state)
+    //console.log('These are the props on board', this.props)
     // let hintsTop
     // if (!this.props.board.hintsTop) hintsTop = this.state.hintsTop
     // else hintsTop = this.props.board.hintsTop
@@ -112,8 +122,18 @@ class Board extends React.Component {
               return (
                 <div className="row" key={`row-${rIdx}`}>
                   {row.map((cell, cIdx) => {
+                    let styleList = "cell";
+                    let innerText = '';
+                    if(cell === 0){
+                      styleList = "cell"
+                    } else if (cell === 1) {
+                      styleList = "cell one"
+                    } else {
+                      styleList = "cell two"
+                      innerText = "X"
+                    }
                     return (
-                      <div onClick={(e) => this.handleClickCell(e, rIdx, cIdx)} className="cell" key={`cell-${cIdx}`}></div>
+                    <div onClick={(e) => this.handleClickCell(e, rIdx, cIdx)} className={styleList} key={`cell-${cIdx}`}>{innerText}</div>
                     )
                   })}
                 </div>
@@ -123,7 +143,7 @@ class Board extends React.Component {
         </div>
         <div className="game-buttons">
           <button>Done</button>
-          <button>Reset</button>
+          <button onClick ={this.handleReset}>Reset</button>
         </div>
       </div>
     );

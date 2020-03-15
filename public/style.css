@@ -70,6 +70,7 @@ table {
 	color: red;
 	text-align: center;
 	line-height: 50px;
+	content: 'X';
 }
 
 .hints-top {
