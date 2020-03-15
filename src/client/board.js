@@ -50,7 +50,7 @@ class Board extends React.Component {
     this.handleDone = this.handleDone.bind(this)
     this.handleReset = this.handleReset.bind(this)
     this.cloneArray = this.cloneArray.bind(this)
-
+    this.handleNewGame = this.handleNewGame.bind(this)
   }
 
   componentDidMount() {
@@ -116,14 +116,19 @@ class Board extends React.Component {
     })
   }
 
+  handleNewGame() {
+    this.props.fetchBoard()
+  }
+
   render() {
+
     const { hintsTop, hintsLeft } = this.props.board
     return (
       <div>
         <Navbar />
         <div className="top-section">
           <div>PERCENTAGE</div>
-          <button>New Game</button>
+          <button onClick={this.handleNewGame}>New Game</button>
         </div>
         <div>
           {this.state.gameComplete ?
