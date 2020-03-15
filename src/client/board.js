@@ -165,6 +165,7 @@ class Board extends React.Component {
         <div className="game-buttons">
           <button onClick={this.handleDone}>Done</button>
           <button onClick={this.handleReset}>Reset</button>
+          <button>Undo</button>
         </div>
       </div>
     );
