@@ -113,8 +113,9 @@ table {
 }
 
 .hintL-cell {
-	line-height: 50px;
+	line-height: 51px;
 	margin-left: 5px;
+	margin-right: 5px;
 }
 
 .game-buttons {
