@@ -77,6 +77,7 @@ class Board extends React.Component {
 
   stringifyArray(array){
     let str = ""
+
     for(let i=0; i< array.length; i++){
       if(Array.isArray(array[i])){
         str += this.stringifyArray(array[i])
@@ -85,15 +86,13 @@ class Board extends React.Component {
         else str += array[i]
       }
     }
-
     return str
   }
 
   handleDone(){
     let currentBoard = this.stringifyArray(this.state.board);
-    let solutionBoard = this.stringifyArray(this.props.board.solution);
-    console.log(currentBoard)
-    console.log(solutionBoard)
+    let solutionBoard = this.stringifyArray(this.props.board.board);
+
     if (currentBoard === solutionBoard){
       console.log('You win!!!!')
     } else {
