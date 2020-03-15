@@ -69,16 +69,19 @@ class Board extends React.Component {
   }
 
   handleClickCell = (evt, rIdx, cIdx) => {
-    const newBoard = this.cloneArray(this.state.board)
+    if (!this.state.gameComplete) {
+      const newBoard = this.cloneArray(this.state.board)
 
-    if (this.state.board[rIdx][cIdx] === 0) newBoard[rIdx][cIdx] = 1
-    else if (this.state.board[rIdx][cIdx] === 1) newBoard[rIdx][cIdx] = 2
-    else newBoard[rIdx][cIdx] = 0
+      if (this.state.board[rIdx][cIdx] === 0) newBoard[rIdx][cIdx] = 1
+      else if (this.state.board[rIdx][cIdx] === 1) newBoard[rIdx][cIdx] = 2
+      else newBoard[rIdx][cIdx] = 0
 
-    this.setState({
-      board: newBoard
-    })
-    this.state.boardHistory.push(newBoard)
+      this.setState({
+        board: newBoard
+      })
+      this.state.boardHistory.push(newBoard)
+      this.handleDone(newBoard)
+    }
   }
 
   stringifyArray(array) {
@@ -95,30 +98,33 @@ class Board extends React.Component {
     return str
   }
 
-  handleDone() {
-    let currentBoard = this.stringifyArray(this.state.board);
+  handleDone(newBoard) {
+    let currentBoard = this.stringifyArray(newBoard)
     let solutionBoard = this.stringifyArray(this.props.board.solution);
-    const acc = this.getAccuracy(currentBoard, solutionBoard)
+
 
     if (currentBoard === solutionBoard) {
       this.setState({
         gameWon: true,
-        gameComplete: true,
-        accuracy: acc
-      })
-    } else {
-      this.setState({
-        gameComplete: true,
-        accuracy: acc
+        gameComplete: true
       })
     }
+
+    console.log('this is the handle done', this.state)
   }
 
   handleReset() {
     this.setState({
       board: initBoard,
       gameComplete: false,
-      gameWon: false
+      gameWon: false,
+      boardHistory: [[
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ]]
     })
   }
 
@@ -128,18 +134,19 @@ class Board extends React.Component {
   }
 
   handleUndo() {
-    let cpBoardHist = this.cloneArray(this.state.boardHistory)
-    cpBoardHist.pop()
-    let lastBoardPlayed = cpBoardHist[cpBoardHist.length - 1]
-    this.setState({
-      boardHistory: cpBoardHist,
-      board: lastBoardPlayed
-    })
+    if (this.state.boardHistory.length !== 1) {
+      let cpBoardHist = this.cloneArray(this.state.boardHistory)
+      cpBoardHist.pop()
+      let lastBoardPlayed = cpBoardHist[cpBoardHist.length - 1]
+      this.setState({
+        boardHistory: cpBoardHist,
+        board: lastBoardPlayed
+      })
+    }
   }
 
   getAccuracy(currBoard, solution) {
-    console.log('you accurate girl')
-
+    if (this.state.boardHistory.length === 1) return 0
     if (currBoard === solution) { return 100 }
     else {
       let strWhereTheyMatch = ''
@@ -157,6 +164,7 @@ class Board extends React.Component {
   render() {
 
     const { hintsTop, hintsLeft } = this.props.board
+
     return (
       <div>
         <Navbar />
@@ -167,10 +175,9 @@ class Board extends React.Component {
         <div className="win-message">
         </div>
         <div className="board">
-          {this.state.gameComplete ?
-            (this.state.gameWon ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : <div className="board-results">You almost got it. You're {this.state.accuracy}% accurate!</div>)
-            : null
-          }
+
+          {this.state.gameComplete ? <div className="board-results">Winner, Winner, Chicken Dinner!</div> : null}
+
 
           {hintsTop ?
             <div className="hints-top">{hintsTop.map((hintsRow, rhIdx) => {
@@ -225,9 +232,17 @@ class Board extends React.Component {
             </div>
           </div>
           <div className="game-buttons">
-            <button onClick={this.handleDone}>Done</button>
-            <button onClick={this.handleReset}>Reset</button>
-            <button onClick={this.handleUndo}>Undo</button>
+
+            {
+
+                (this.state.boardHistory.length !== 1 && this.state.gameComplete === false) ?
+                  <div>
+                    <button onClick={this.handleReset}>Reset</button>
+                    <button onClick={this.handleUndo}>Undo</button>
+                  </div> :
+                  null
+
+            }
           </div>
         </div>
       </div>
