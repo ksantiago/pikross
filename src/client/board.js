@@ -1,84 +1,122 @@
 import React from "react";
-import {fetchBoard} from '../reducers/boardReducer'
-import {connect} from 'react-redux'
+import { fetchBoard } from '../reducers/boardReducer'
+import { connect } from 'react-redux'
+
 
 
 class Board extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			hintsTop: [
-				[0,0,0],
-				[0,0,0],
-				[0,0,0],
-				[0,0,0],
-				[0,0,0]
-			],
-			hintsLeft: [
-				[0,0,0],
-				[0,0,0],
-				[0,0,0],
-				[0,0,0],
-				[0,0,0]
-			],
-			board: [
-				[0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0],
-				[0, 0, 0, 0, 0]
-			]
+  constructor() {
+    super();
+    this.state = {
+      hintsTop: [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      hintsLeft: [
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      board: [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ],
     };
+    this.handleClickCell = this.handleClickCell.bind(this)
   }
-  componentDidMount(){
-		//call thunk to fetch new board with solution
-		this.props.fetchBoard()
-	}
-	//handle clickCell
-	//updates the local state - board
-	//colors cell to blue when clicked
-	//if you hold down shft + click = X
-	//handle clickDone
-	//checks current local state board against solution board
-	//convert array to string
-	//handle clickReset
-	//this.setState ({this.state.board = [
-			// 	[0, 0, 0, 0, 0],
-			// 	[0, 0, 0, 0, 0],
-			// 	[0, 0, 0, 0, 0],
-			// 	[0, 0, 0, 0, 0],
-			// 	[0, 0, 0, 0, 0]
-			// ]})
-	render() {
-		console.log('These are the props on board', this.props)
-		return (
-			<div className="board">
-				{this.state.board.map((row, index) => {
-					return (
-						<div className="row" key={`row-${index}`}>
-							{row.map((cell, index) => {
-								return (
-                  <div className="cell" key={`cell-${index}`}></div>
+  componentDidMount() {
+    this.props.fetchBoard()
+  }
+
+  handleClickCell = (evt, rIdx, cIdx) => {
+    const newBoard = [...this.state.board]
+    if (evt.shiftKey) {
+      newBoard[rIdx][cIdx] = 2
+      this.setState({
+        board: newBoard
+      })
+      evt.target.className += ' two'
+      evt.target.innerHTML = 'X'
+    }
+    else {
+      newBoard[rIdx][cIdx] = 1
+      this.setState({
+        board: newBoard
+      })
+      evt.target.className += ' one'
+    }
+  }
+  //handle clickCell
+  //updates the local state - board
+  //colors cell to blue when clicked
+  //if you hold down shft + click = X
+  //handle clickDone
+  //checks current local state board against solution board
+  //convert array to string
+  //handle clickReset
+  //this.setState ({this.state.board = [
+  // 	[0, 0, 0, 0, 0],
+  // 	[0, 0, 0, 0, 0],
+  // 	[0, 0, 0, 0, 0],
+  // 	[0, 0, 0, 0, 0],
+  // 	[0, 0, 0, 0, 0]
+  // ]})
+  render() {
+    console.log('These are the props on board', this.props)
+    // let hintsTop
+    // if (!this.props.board.hintsTop) hintsTop = this.state.hintsTop
+    // else hintsTop = this.props.board.hintsTop
+    // console.log(hintsTop)
+    const {hintsTop} = this.props.board
+    return (
+      <div className="board">
+        {
+          hintsTop ?
+        <div className="hint-row">{hintsTop.map((hintsRow, rhIdx) => {
+          return (
+          <div className="cell" key={`rh-${rhIdx}`}>{hintsRow.map((hintCell, chIdx) => {
+            return (
+              <div className="hint-cell" key={`ch-${chIdx}`}>{hintCell}</div>
+            )
+          })}</div>
+          )
+        })}</div> :
+            null
+        }
+        {this.state.board.map((row, rIdx) => {
+          return (
+            <div className="row" key={`row-${rIdx}`}>
+              {row.map((cell, cIdx) => {
+                return (
+                  <div onClick={(e) => this.handleClickCell(e, rIdx, cIdx)} className="cell" key={`cell-${cIdx}`}></div>
                 )
-							})}
-						</div>
-					);
-				})}
-			</div>
-		);
-	}
+              })}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 }
 
 // map state to props
 const mapState = (state) => ({
-	board: state.board
+  board: state.board
 })
 
 // map dispatch to props
 const mapDispatch = (dispatch) => ({
-	fetchBoard: () => dispatch(fetchBoard())
+  fetchBoard: () => dispatch(fetchBoard())
 })
 
 //return connected board
 export default connect(mapState, mapDispatch)(Board)
-// export default Board
+

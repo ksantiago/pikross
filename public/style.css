@@ -63,3 +63,26 @@ table {
   background-color: lightgray;
   border: .5px solid black;
 }
+.one {
+	background-color: #5CE1E6;
+}
+.two {
+	color: red;
+	text-align: center;
+	line-height: 50px;
+}
+.hint-row {
+	display: flex;
+	justify-content: space-between;
+}
+.hint-cell {
+	height: 20px;
+	margin-left: 21px;
+	margin-top: 4px;
+}
+.white {
+	color: black;
+	background-color: white;
+
+}
+

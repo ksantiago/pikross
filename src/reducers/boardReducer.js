@@ -15,9 +15,6 @@ const gotBoard = (solution) => ({
 // Thunks
 export const fetchBoard = () => async dispatch => {
   try {
-    // await ref.once("value", async (snapshot) => {
-    //   console.log(Object.keys(snapshot.child('solutions').val()))
-    // })
     await ref.once("value", async (snapshot) => {
       const solutions = await snapshot.child('solutions').val();
       // console.log('solutions: ', solutions)
