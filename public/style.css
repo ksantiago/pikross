@@ -89,8 +89,9 @@ table {
 	margin-left: 50px;
 }
 
-.hintT-row > div {
+.hintT-cell {
 	line-height: 15px;
+	width: 10px;
 }
 
 .hl-board {

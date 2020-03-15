@@ -84,7 +84,7 @@ class Board extends React.Component {
           return (
           <div className="hintT-row" key={`rht-${rhIdx}`}>{
             hintsRow.map((hintCell, chIdx) => (
-              <div key={`cht-${chIdx}`}>{hintCell}</div>
+              <div className="hintT-cell" key={`cht-${chIdx}`}>{hintCell}</div>
             ))
           }</div>
           )
