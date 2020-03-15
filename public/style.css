@@ -139,3 +139,43 @@ button {
 .board-results {
 	color: white;
 }
+
+.top-section {
+	background-color: #232323;
+	color: white;
+	display: flex;
+	justify-content: space-around;
+	align-items: baseline;
+}
+/* HOME */
+.home {
+	height: 90vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.home h1 {
+	font-size: 3em;
+	margin-left: 1em;
+}
+
+.home button {
+	margin-top: 8em;
+	margin-bottom: 10em;
+}
+
+
+/* FOOTER */
+
+.footer {
+	background-color: #3D3D3D;
+	color: white;
+	display: flex;
+	justify-content: space-around;
+}
+
+.footer-col {
+	margin: 2em;
+}
