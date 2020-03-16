@@ -47,7 +47,7 @@ table {
 }
 
 .teal {
-	background-color: #5ce1e6;
+	background-color: #5EB1BF;
 }
 /* -------BOARD-------- */
 .board {
@@ -68,13 +68,13 @@ table {
   border: .5px solid black;
 }
 .one {
-	background-color: #5CE1E6;
+	background-color: #5EB1BF;
 }
 .two {
 	color: red;
 	text-align: center;
 	line-height: 50px;
-	content: 'X';
+	/* content: 'X'; */
 }
 
 .hints-top {
@@ -124,11 +124,6 @@ table {
 	margin-right: 5px;
 }
 
-.game-buttons {
-	/* width: 205px */
-	/* border: 1px solid red; */
-
-}
 
 button {
 	margin-left: 3em;
@@ -183,7 +178,7 @@ button {
 
 /* NAVBAR */
 .navbar {
-	background-color: #5ce1e6;
+	background-color: #5EB1BF;
 	color: #232323;
 }
 
