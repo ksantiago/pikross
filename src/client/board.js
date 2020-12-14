@@ -207,6 +207,7 @@ class Board extends React.Component {
 
               }
             </div>
+
             <div>
               {this.state.board.map((row, rIdx) => {
                 return (
